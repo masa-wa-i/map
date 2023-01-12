@@ -10,6 +10,7 @@ ajax.open("GET", "rpg.map");
 ajax.send();
 ajax.onreadystatechange = function () {
   if (ajax.readyState === 4 && ajax.status === 200) {
+    console.log(ajax.responseText);
     ajax_map = ajax.responseText.split("\r\n");
     for (var i = 0; i < ajax_map.length; i++) {
       map.push(JSON.parse("[" + ajax_map[i] + "]"));
