@@ -13,7 +13,7 @@ ajax.send();
 ajax.onreadystatechange = function () {
   if (ajax.readyState === 4 && ajax.status === 200) {
     ajax_map = ajax.responseText.split("\r\n");
-    for (var i = 0; i < ajax_map.length; i++) {
+    for (var i in ajax_map) {
       map.push(JSON.parse("[" + ajax_map[i] + "]"));
     }
   } else {
