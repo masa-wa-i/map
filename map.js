@@ -6,31 +6,17 @@ s.innerHTML = "";
 let ajax = new XMLHttpRequest();
 let map = [];
 let map_ob = [];
-var form = document.forms.myform;
 
-form.myfile.addEventListener("change", function (e) {
-  var reader = new FileReader();
-  reader.readAsText(e.target.files[0]);
-  reader.addEventListener("load", function () {
-    mapa = reader.result.split("\r\n");
-    console.log(mapa);
-    for (var i in mapa) {
-      map.push(JSON.parse("[" + mapa[i] + "]"));
-      console.log(map);
-    }
-  });
-});
 ajax.open("GET", "rpg.map");
 ajax.send();
 ajax.onreadystatechange = function () {
   if (ajax.readyState === 4 && ajax.status === 200) {
+    console.log(ajax.responseText);
     ajax_map = ajax.responseText.split("\r\n");
     console.log(ajax_map);
     for (var i in ajax_map) {
       map.push(JSON.parse("[" + ajax_map[i] + "]"));
     }
-  } else {
-    console.log("owata");
   }
 };
 let ajax2 = new XMLHttpRequest();
