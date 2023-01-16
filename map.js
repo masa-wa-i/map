@@ -6,15 +6,30 @@ s.innerHTML = "";
 let ajax = new XMLHttpRequest();
 let map = [];
 let map_ob = [];
+var form = document.forms.myform;
+
+form.myfile.addEventListener("change", function (e) {
+  var reader = new FileReader();
+  reader.readAsText(e.target.files[0]);
+  reader.addEventListener("load", function () {
+    mapa = reader.result.split("\r\n");
+    console.log(mapa);
+    for (var i in mapa) {
+      map.push(JSON.parse("[" + mapa[i] + "]"));
+      console.log(map);
+    }
+  });
+});
 ajax.open("GET", "rpg.map");
 ajax.send();
 ajax.onreadystatechange = function () {
   if (ajax.readyState === 4 && ajax.status === 200) {
-    console.log(ajax.responseText);
     ajax_map = ajax.responseText.split("\r\n");
     for (var i = 0; i < ajax_map.length; i++) {
       map.push(JSON.parse("[" + ajax_map[i] + "]"));
     }
+  } else {
+    console.log("owata");
   }
 };
 let ajax2 = new XMLHttpRequest();
@@ -40,6 +55,7 @@ let str = [[], [], ["3", "2"], ["3", "2"]];
 let scene = "aa";
 let key = [];
 let key_co = [];
+let map_scene = "both";
 for (var i = 0; i < 256; i++) {
   key[i] = 0;
 }
@@ -103,6 +119,7 @@ ima_32[10] = [images[0], 96, 224, 32, 32];
 ima_32[11] = [images[0], 128, 224, 32, 32];
 ima_32[12] = [images[0], 32, 192, 32, 32];
 ima_32[13] = [images[0], 64, 192, 32, 32];
+ima_32[14] = [images[0], 0, 128, 64, 64];
 
 function draw1(a, b, d) {
   c.drawImage(ima_32[a][0], ima_32[a][1], ima_32[a][2], ima_32[a][3], ima_32[a][4], b, d, 32, 32);
@@ -189,7 +206,9 @@ var rpgmap = setInterval(function () {
               }
             } else {
               if (map[a][b] != -1) {
-                draw1(map[a][b], 32 * (b - x) - 16, 32 * (a - y));
+                if (map_scene == "map" || map_scene == "both") {
+                  draw1(map[a][b], 32 * (b - x) - 16, 32 * (a - y));
+                }
               }
             }
           }
@@ -207,7 +226,9 @@ var rpgmap = setInterval(function () {
               }
             } else {
               if (map_ob[a][b] != -1) {
-                draw1(map_ob[a][b], 32 * (b - x) - 16, 32 * (a - y));
+                if (map_scene == "object" || map_scene == "both") {
+                  draw1(map_ob[a][b], 32 * (b - x) - 16, 32 * (a - y));
+                }
               }
             }
           }
