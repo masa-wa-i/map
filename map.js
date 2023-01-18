@@ -11,13 +11,10 @@ ajax.open("GET", "rpg.map");
 ajax.send();
 ajax.onreadystatechange = function () {
   if (ajax.readyState === 4 && ajax.status === 200) {
-    console.log(ajax.responseText);
     ajax_map = ajax.responseText.split("\n");
-    console.log(ajax_map);
     for (var i in ajax_map) {
       map.push(JSON.parse("[" + ajax_map[i] + "]"));
     }
-    console.log(ajax_map);
   }
 };
 let ajax2 = new XMLHttpRequest();
@@ -25,10 +22,9 @@ ajax2.open("GET", "object.map");
 ajax2.send();
 ajax2.onreadystatechange = function () {
   if (ajax2.readyState === 4 && ajax2.status === 200) {
-    ajax_map_ob = ajax2.responseText.split("\r\n");
+    ajax_map_ob = ajax2.responseText.split("\n");
     for (var i = 0; i < ajax_map_ob.length; i++) {
       map_ob.push(JSON.parse("[" + ajax_map_ob[i] + "]"));
-      console.log(map_ob);
     }
   }
 };
