@@ -12,12 +12,14 @@ ajax.send();
 ajax.onreadystatechange = function () {
   if (ajax.readyState === 4 && ajax.status === 200) {
     console.log(ajax.responseText);
-    ajax_map = ajax.responseText.split("\r\n");
-    ajax_map = ajax_map.split("\n");
+    ajax_map = ajax.responseText.split("\n");
+    console.log(ajax_map);
+    ajax_map = ajax_map.split("\r");
     console.log(ajax_map);
     for (var i in ajax_map) {
       map.push(JSON.parse("[" + ajax_map[i] + "]"));
     }
+    console.log(ajax_map);
   }
 };
 let ajax2 = new XMLHttpRequest();
